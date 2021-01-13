@@ -53,16 +53,21 @@
 
                 //根据flag改变棋子颜色
                 if (flag) {
+                    //更改边框和填充颜色
                     cxt.fillStyle = 'black';
                     cxt.strokeStyle = 'black';
                     // 把黑子坐标记录在black数组中
                     blackArr.push(JSON.stringify([x, y]));
+                    // 每次落子判断胜利
                     decide(x, y, blackArr);
                 } else {
+                    //更改边框和填充颜色
                     cxt.fillStyle = 'white';
                     cxt.strokeStyle = 'white';
                     // 把白子坐标记录在white数组中
                     whiteArr.push(JSON.stringify([x, y]));
+
+                    // 每次落子判断胜利
                     decide(x, y, whiteArr);
                 }
 
@@ -73,17 +78,6 @@
                 flag = !flag;
             }
         }
-
-
-
-
-
-        /* 
-            封装canvas 绘制圆形
-        */
-        
-
-        
     </script>
 </body>
 
