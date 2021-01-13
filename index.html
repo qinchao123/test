@@ -5,22 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: lightgray;
-        }
-
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
     <canvas id="chess" width="700" height="700"></canvas>
 
     <script src="js/canvas.js"></script>
+    <script src="js/circle.js"></script>
     <script>
         // 黑子落子坐标集合
         var blackArr = [];
@@ -65,19 +57,20 @@
                     cxt.strokeStyle = 'black';
                     // 把黑子坐标记录在black数组中
                     blackArr.push(JSON.stringify([x, y]));
-                } // } else {
-                //     cxt.fillStyle = 'white';
-                //     cxt.strokeStyle = 'white';
-                //     // 把白子坐标记录在white数组中
-                //     whiteArr.push([x,y]);
-                // }
+                    decide(x, y, blackArr);
+                } else {
+                    cxt.fillStyle = 'white';
+                    cxt.strokeStyle = 'white';
+                    // 把白子坐标记录在white数组中
+                    whiteArr.push(JSON.stringify([x, y]));
+                    decide(x, y, whiteArr);
+                }
 
                 //绘制圆形
                 circle(x, y);
 
                 //每次点击完要对flag进行改变
-                // flag = !flag;
-                decide(x, y);
+                flag = !flag;
             }
         }
 
@@ -88,69 +81,9 @@
         /* 
             封装canvas 绘制圆形
         */
-        function circle(x, y) {
-            cxt.beginPath();
-            cxt.arc(x * 50, y * 50, 20, 0, Math.PI * 2, false);
-            cxt.stroke();
-            cxt.closePath();
-            cxt.fill();
-            cxt.stroke();
-        }
+        
 
-        function decide(x, y) {
-            // 5,5
-            // i 为一行/一列共有多少子
-            for (var i = 0; i < 15; i++) {
-                // 横向判断
-                if (blackArr.includes(JSON.stringify([x, i])) &&
-                    blackArr.includes(JSON.stringify([x, i + 1])) &&
-                    blackArr.includes(JSON.stringify([x, i + 2])) &&
-                    blackArr.includes(JSON.stringify([x, i + 3])) &&
-                    blackArr.includes(JSON.stringify([x, i + 4]))) {
-                    console.log('黑胜');
-                }
-                // 纵向判断
-                if (blackArr.includes(JSON.stringify([i, y])) &&
-                    blackArr.includes(JSON.stringify([i + 1, y])) &&
-                    blackArr.includes(JSON.stringify([i + 2, y])) &&
-                    blackArr.includes(JSON.stringify([i + 3, y])) &&
-                    blackArr.includes(JSON.stringify([i + 4, y]))) {
-                    console.log('黑胜');
-                }
-                // \向判断1
-                if (x > y &&
-                    blackArr.includes(JSON.stringify([x - y + i, i])) &&
-                    blackArr.includes(JSON.stringify([x - y + i + 1, i + 1])) &&
-                    blackArr.includes(JSON.stringify([x - y + i + 2, i + 2])) &&
-                    blackArr.includes(JSON.stringify([x - y + i + 3, i + 3])) &&
-                    blackArr.includes(JSON.stringify([x - y + i + 4, i + 4]))) {
-                    console.log('黑胜');
-                }
-
-
-                // \向判断2
-                if (y > x &&
-                    blackArr.includes(JSON.stringify([i, y - x + i])) &&
-                    blackArr.includes(JSON.stringify([i + 1, y - x + i + 1])) &&
-                    blackArr.includes(JSON.stringify([i + 2, y - x + i + 2])) &&
-                    blackArr.includes(JSON.stringify([i + 3, y - x + i + 3])) &&
-                    blackArr.includes(JSON.stringify([i + 4, y - x + i + 4]))) {
-                    console.log('黑胜');
-                }
-
-
-                // \向判断3
-                if (x == y &&
-                    blackArr.includes(JSON.stringify([i, i])) &&
-                    blackArr.includes(JSON.stringify([i + 1, i + 1])) &&
-                    blackArr.includes(JSON.stringify([i + 2, i + 2])) &&
-                    blackArr.includes(JSON.stringify([i + 3, i + 3])) &&
-                    blackArr.includes(JSON.stringify([i + 4, i + 4]))) {
-                    console.log('黑胜');
-                }
-
-            }
-        }
+        
     </script>
 </body>
 
